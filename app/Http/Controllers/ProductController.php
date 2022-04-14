@@ -112,6 +112,6 @@ class ProductController extends Controller
 
         return response()->json([
             'message' => 'Product was deleted succesfuly'
-        ], Response::HTTP_NO_CONTENT);
+        ]);//, Response::HTTP_NO_CONTENT);
     }
 }

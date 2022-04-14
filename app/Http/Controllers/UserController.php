@@ -111,6 +111,6 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'User was deleted succesfuly'
-        ], Response::HTTP_NO_CONTENT);
+        ]);//, Response::HTTP_NO_CONTENT);
     }
 }

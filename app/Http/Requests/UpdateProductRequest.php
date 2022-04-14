@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Interfaces\ProductRepositoryInterface;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -21,11 +22,12 @@ class UpdateProductRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(ProductRepositoryInterface $productRepository)
     {
+        $product = $productRepository->getProductBySlug($this->route('slug'));
         return [
-            'name' => 'required',
-            'slug' => 'required|unique:products,slug,'.$this->product->slug,
+            'name' => 'required|string',
+            'slug' => 'required|string|unique:products,slug,'.$product->id,
             'description' => 'required',
             'price' => 'required|min:0|max:9999',
         ];

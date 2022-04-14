@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class ApiAuthenticate
+class ApiUnauthenticate
 {
     /**
      * Handle an incoming request.
@@ -24,10 +24,10 @@ class ApiAuthenticate
             $token = $request->bearerToken();
         }
 
-        if (!empty($token) && $token === auth()->user()->api_token->token) {
-            return $next($request);
+        if (!empty($token)) {
+            return response()->json(['message' => 'You are allready login, do something to redirect'], 201);
         }
 
-        return response()->json(['message' => 'API token expired or not found'], 401);
+        return $next($request);
     }
 }

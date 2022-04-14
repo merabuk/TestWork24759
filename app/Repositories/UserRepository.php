@@ -34,6 +34,8 @@ class UserRepository implements UserRepositoryInterface
     {
         $newDetails['password'] = Hash::make($newDetails['password']);
 
-        return User::whereId($userId)->update($newDetails);
+        User::whereId($userId)->update($newDetails);
+
+        return User::with('products')->findOrFail($userId);
     }
 }

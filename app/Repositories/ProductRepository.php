@@ -9,17 +9,17 @@ class ProductRepository implements ProductRepositoryInterface
 {
     public function getAllProducts()
     {
-        return Product::all();
+        return Product::with('users')->get();
     }
 
     public function getProductBySlug($productSlug)
     {
-        return Product::where('slug', $productSlug)->firstOrFail();
+        return Product::with('users')->where('slug', $productSlug)->firstOrFail();
     }
 
     public function deleteProduct($productSlug)
     {
-        Product::where('slug', $productSlug)->destroy();
+        Product::destroy($productSlug);
     }
 
     public function createProduct(array $productDetails)
@@ -29,6 +29,10 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function updateProduct($productSlug, array $newDetails)
     {
-        return Product::where('slug', $productSlug)->update($newDetails);
+        $newSlug = $newDetails['slug'];
+
+        Product::where('slug', $productSlug)->update($newDetails);
+
+        return Product::where('slug', $newSlug)->firstOrFail();
     }
 }
