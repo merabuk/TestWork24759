@@ -13,12 +13,12 @@ class UserRepository implements UserRepositoryInterface
         return User::with('products')->get();
     }
 
-    public function getUserById($userId): object
+    public function getUserById(string $userId): object
     {
         return User::with('products')->findOrFail($userId);
     }
 
-    public function deleteUser($userId): void
+    public function deleteUser(string $userId): void
     {
         User::destroy($userId);
     }
@@ -30,7 +30,7 @@ class UserRepository implements UserRepositoryInterface
         return User::create($userDetails);
     }
 
-    public function updateUser($userId, array $newDetails)
+    public function updateUser(string $userId, array $newDetails)
     {
         $newDetails['password'] = Hash::make($newDetails['password']);
 

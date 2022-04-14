@@ -7,27 +7,27 @@ use App\Models\Product;
 
 class ProductRepository implements ProductRepositoryInterface
 {
-    public function getAllProducts()
+    public function getAllProducts(): object
     {
         return Product::with('users')->get();
     }
 
-    public function getProductBySlug($productSlug)
+    public function getProductBySlug(string $productSlug): object
     {
         return Product::with('users')->where('slug', $productSlug)->firstOrFail();
     }
 
-    public function deleteProduct($productSlug)
+    public function deleteProduct(string $productSlug): void
     {
-        Product::destroy($productSlug);
+       Product::where('slug', $productSlug)->firstOrFail()->delete();
     }
 
-    public function createProduct(array $productDetails)
+    public function createProduct(array $productDetails): object
     {
         return Product::create($productDetails);
     }
 
-    public function updateProduct($productSlug, array $newDetails)
+    public function updateProduct(string $productSlug, array $newDetails): object
     {
         $newSlug = $newDetails['slug'];
 
